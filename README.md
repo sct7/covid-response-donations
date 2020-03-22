@@ -1,19 +1,19 @@
 # Setup
 
-### Set up the .env file
-Copy .env.example to server/.env
-Replace the API keys with your own test API keys
+### Setup the .env file
+* Copy .env.example to server/.env
+* Replace the API keys with your own test API keys
 
 ### Start the node server.
 
 In one terminal window:
-npm install
-Run npm start
+    npm install
+    Run npm start
 
 ### Forward webhooks
 
 In another terminal:
-stripe listen --forward-to localhost:4242/webhook
+    stripe listen --forward-to localhost:4242/webhook
 
 ### Testing
 * Go to localhost:4242 to access the app
