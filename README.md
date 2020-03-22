@@ -8,14 +8,16 @@
 
 In one terminal window:
 ```
+cd covid-response-donations/server
 npm install
 Run npm start
 ```
 
-### Forward webhooks
+### Forward webhooks (optional)
 
 In another terminal:
 ```
+cd covid-response-donations/server
 stripe listen --forward-to localhost:4242/webhook
 ```
 
@@ -23,4 +25,4 @@ stripe listen --forward-to localhost:4242/webhook
 * Go to localhost:4242 to access the app
 * Submit a donation
 * Can test with any of the Stripe test cards
-* Check the server/donations.log file to see a list of email addresses that we need to send receipts to.
+* If forwarding webhooks, check server/donations.log file to see a list of email addresses with successful donations.

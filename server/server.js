@@ -5,7 +5,10 @@ const { resolve } = require("path");
 const env = require("dotenv").config({ path: "./.env" });
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-const fs = require('fs') 
+const fs = require('fs') ;
+
+donation_amount = 1000;
+donation_currency = 'usd';
 
 app.use(express.static(process.env.STATIC_DIR));
 app.use(
@@ -26,19 +29,11 @@ app.get("/checkout", (req, res) => {
   res.sendFile(path);
 });
 
-const calculateOrderAmount = items => {
-  // Replace this constant with a calculation of the order's amount
-  // Calculate the order total on the server to prevent
-  // people from directly manipulating the amount on the client
-  return 1000;
-};
-
 app.post("/create-payment-intent", async (req, res) => {
-  const { items, currency } = req.body;
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculateOrderAmount(items),
-    currency: currency
+    amount: donation_amount,
+    currency: donation_currency
   });
 
   // Send publishable key and PaymentIntent details to client
