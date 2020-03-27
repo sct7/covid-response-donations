@@ -98,12 +98,8 @@ var orderComplete = function(clientSecret) {
     var paymentIntentJson = JSON.stringify(paymentIntent, null, 2);
 
     document.querySelector(".sr-payment-form").classList.add("hidden");
-    //document.querySelector("pre").textContent = paymentIntentJson;
     document.querySelector(".sr-result").classList.add("expand");
     document.querySelector(".sr-result").classList.remove("hidden");
-    /*setTimeout(function() {
-      document.querySelector(".sr-result").classList.add("expand");
-    }, 200);*/
 
     changeLoadingState(false);
   });

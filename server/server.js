@@ -14,7 +14,6 @@ app.use(express.static(process.env.STATIC_DIR));
 app.use(
   express.json({
     // We need the raw body to verify webhook signatures.
-    // Let's compute it only when hitting the Stripe webhook endpoint.
     verify: function(req, res, buf) {
       if (req.originalUrl.startsWith("/webhook")) {
         req.rawBody = buf.toString();
@@ -33,7 +32,8 @@ app.post("/create-payment-intent", async (req, res) => {
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
     amount: donation_amount,
-    currency: donation_currency
+    currency: donation_currency,
+    statement_descriptor: 'COVID Donation'
   });
 
   // Send publishable key and PaymentIntent details to client
@@ -44,8 +44,6 @@ app.post("/create-payment-intent", async (req, res) => {
 });
 
 // Expose a endpoint as a webhook handler for asynchronous events.
-// Configure your webhook in the stripe developer dashboard
-// https://dashboard.stripe.com/test/webhooks
 app.post("/webhook", async (req, res) => {
   let data, eventType;
 
@@ -76,9 +74,7 @@ app.post("/webhook", async (req, res) => {
   if (eventType === "payment_intent.succeeded") {
     // Funds have been captured
     // Fulfill any orders, e-mail receipts, etc
-    // To cancel the payment after capture you will need to issue a Refund (https://stripe.com/docs/api/refunds)
     console.log("💰 Payment captured!");
-    console.log(data.object["receipt_email"]);
     fs.writeFile('donations.log', data.object["receipt_email"]+"\n",  {'flag':'a'}, (err) => { 
         if (err) throw err; 
     }) 

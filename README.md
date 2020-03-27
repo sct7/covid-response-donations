@@ -10,7 +10,7 @@ In one terminal window:
 ```
 cd covid-response-donations/server
 npm install
-Run npm start
+npm start
 ```
 
 ### Forward webhooks (optional)
