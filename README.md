@@ -20,6 +20,7 @@ In another terminal:
 cd covid-response-donations/server
 stripe listen --forward-to localhost:4242/webhook
 ```
+Copy the webhook signing secret to server/.env
 
 ### Testing
 * Go to localhost:4242 to access the app
